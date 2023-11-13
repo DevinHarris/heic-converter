@@ -1,0 +1,85 @@
+html {
+  
+  font-size: 62.5%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f2f5f9;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+}
+
+.form-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+
+  width: 100%;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.image-upload__form {
+  align-items: center;
+  background-color: #fff;
+  border-radius: 5rem;
+  display: flex;
+  flex-direction: column;
+  filter: drop-shadow(3px 5px 9px #cdcdcd);
+  padding: 5rem;
+  justify-content: center;
+  min-height: 60%;
+  width: 80%;
+}
+
+form {
+
+}
+
+.image-result {
+  margin-top: 3em;
+  width: 40%;
+}
+
+.image-result img {
+  width: 100%;
+  height: 100%;
+}
+
+.convert__btn {
+    background-color: #012a50;
+    border: 1px solid #012a50;
+    border-radius: 5rem;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 1em 3em;
+  
+}
+
+
+.image-upload__label {
+  font-size: 2rem;
+  margin-right: 2rem;
+}
+
+.image-result__placeholder {
+  color: #c3c3c3;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.image-result__placeholder p {
+  font-size: 1.2rem;
+}
