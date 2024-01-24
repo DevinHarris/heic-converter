@@ -6,30 +6,48 @@ import './App.css';
 
 
 function App() {
-  const [imageToConvert, setImageToConvert] = useState('');
+  const [imagesToConvert, setImagesToConvert] = useState([]);
   const [imageType, setImageType] = useState('image/jpeg');
   const [loadingState, setLoadingState] = useState(false);
-  const [convertedImage, setConvertedImage] = useState('');
+  const [convertedImages, setConvertedImages] = useState([]);
 
 
   const handleSubmit = async (event) => {
       event.preventDefault();
-      setConvertedImage('');
-      setLoadingState(true)
+      setLoadingState(true);
 
-      const blobURL = URL.createObjectURL(imageToConvert);
-      const res = await fetch(blobURL);
-      let blob = await res.blob();
+      
 
-      let conversionResult = await heic2any({
-        blob,
-        toType: imageType,
-        quality: 1
-      })
+      for (const image of imagesToConvert) {
 
-      let url = URL.createObjectURL(conversionResult);
-      setConvertedImage(url);
+        const blobURL = URL.createObjectURL(image);
+        const res = await fetch(blobURL);
+        let blob = await res.blob();
+
+        let conversionResult = await heic2any({
+          blob,
+          toType: imageType,
+          quality: 1,
+          multiple: true,
+          gifInterval: 0.4
+        }).catch(err => console.log(err))
+
+
+        let url = window.URL.createObjectURL(conversionResult[0]);
+        
+        setConvertedImages([
+            ...convertedImages,
+            url
+        ])
+
+      }
+      
       setLoadingState(false)
+  }
+
+  const handleOnChange = async (event) => {
+    const filesArray = Array.from(event.target.files);
+    setImagesToConvert(filesArray)
   }
 
   // useEffect(() => {
@@ -64,9 +82,13 @@ function App() {
               <p>Currently, only one HEIC image is supported at a time and is held in Random-Access Memory (RAM) so you'll need to click the thumbnail to save to disk.</p>
               <p className="cta-bold">Click the upload button to add an image</p>
                 {
-                  imageToConvert ? <div className='image-upload__info'>
-                    <span>{`${imageToConvert.name} was last modified: ${imageToConvert.lastModifiedDate} `}</span>
-                  </div>: null
+                  imagesToConvert.length ? imagesToConvert.map(image => {
+                    return (
+                      <div className='image-upload__info' key={`${image.name}-${image.lastModified}`}>
+                        <span>{`${image.name} was last modified: ${image.lastModifiedDate} `}</span>
+                    </div>
+                    )
+                  }): null
                 }
 
                 <form onSubmit={handleSubmit}>
@@ -80,27 +102,31 @@ function App() {
                       <option disabled></option>
                       <option value="image/jpeg">JPEG</option>
                       <option value="image/png">PNG</option>
+                      <option value="image/gif">GIF</option>
                     </select>
                   </div>
-                  <input id="image-upload" type="file" accept=".heic,.heif" onChange={(e) => setImageToConvert(e.target.files[0])} multiple name="files[]" />
+                  <input id="image-upload" type="file" accept=".heic,.heif" onChange={handleOnChange} multiple name="files[]" />
                 
                 </form>
-                
-                  {
-                    convertedImage ? (
-                      <div className="image-result">
-                        <a href={convertedImage} target='_blank' download>
-                          <img src={convertedImage} />
+
+                {
+                  convertedImages.length ? convertedImages.map(image => {
+                    return (
+                      <div className="image-result" key={`${image.name}-${image.lastModified}`}>
+                        <a href={image} target='_blank' download>
+                          <img src={image} />
                         </a>
-                      </div>
-                    ) : (
-                      <div className='image-result__placeholder'>
-                        <p>👋 Your converted image will appear here 👋</p>
+                    </div>
+                    )
+                  }) : (
+                    <div className='image-result__placeholder'>
+                        <p>👋 Your converted images will appear here 👋</p>
                         <p>😁 Then click the thumbnail to download 😁</p>
 
                     </div>
-                    )
+                  )
                 }
+          
 
                 {
 

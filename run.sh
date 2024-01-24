@@ -1,3 +1,6 @@
 #!/user/bin/env bash
 
-echo "Hello World!"
+cd "./client"
+npm run start
+
+echo "The "
