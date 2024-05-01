@@ -34,7 +34,7 @@ input[type="file"] {
   filter: drop-shadow(3px 5px 9px #cdcdcd);
   padding: 5rem;
   justify-content: center;
-  min-height: 60%;
+  /* min-height: 60%; */
   width: 80%;
 }
 
@@ -44,7 +44,7 @@ form {
 
 .image-result {
   margin-top: 3em;
-  width: 40%;
+  /* width: 40%; */
 }
 
 .image-result img {
@@ -82,6 +82,12 @@ form {
   font-size: 1.3rem;
   font-weight: bold;
   padding: 1em 3em;
+}
+
+.image_results {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
 }
 
 .image-result__placeholder {
