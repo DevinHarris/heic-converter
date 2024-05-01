@@ -10,6 +10,7 @@ function App() {
   const [imageType, setImageType] = useState('image/jpeg');
   const [loadingState, setLoadingState] = useState(false);
   const [convertedImages, setConvertedImages] = useState([]);
+  const [JPEGImageQuality, setJPEGImageQuality] = useState(5);
 
 
   const handleSubmit = async (event) => {
@@ -109,23 +110,27 @@ function App() {
                 
                 </form>
 
-                {
-                  convertedImages.length ? convertedImages.map(image => {
-                    return (
-                      <div className="image-result" key={`${image.name}-${image.lastModified}`}>
-                        <a href={image} target='_blank' download>
-                          <img src={image} />
-                        </a>
-                    </div>
-                    )
-                  }) : (
-                    <div className='image-result__placeholder'>
-                        <p>👋 Your converted images will appear here 👋</p>
-                        <p>😁 Then click the thumbnail to download 😁</p>
+                <div className='image_results'>
 
-                    </div>
-                  )
-                }
+                  {
+                    convertedImages.length ? convertedImages.map(image => {
+                      return (
+                        <div className="image-result" key={`${image.name}-${image.lastModified}`}>
+                          <a href={image} target='_blank' download>
+                            <img src={image} />
+                          </a>
+                      </div>
+                      )
+                    }) : (
+                      <div className='image-result__placeholder'>
+                          <p>👋 Your converted images will appear here 👋</p>
+                          <p>😁 Then click the thumbnail to download 😁</p>
+
+                      </div>
+                    )
+                  }
+
+                </div>
           
 
                 {
