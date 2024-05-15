@@ -106,7 +106,7 @@ function App() {
                     </select>
 
                     {
-                      imageType === 'image/jpeg' ? ( <select defaultValue={JPEGImageQuality} onChange={(e) => setConvertedImages(e.target.value)}>
+                      imageType === 'image/jpeg' ? ( <select defaultValue={JPEGImageQuality} onChange={(e) => setJPEGImageQuality(e.target.value)}>
                         <option disabled></option>
                         <option value="0.3">Compressed</option>
                         <option value="0.5">Medium</option>
