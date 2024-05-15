@@ -10,7 +10,7 @@ function App() {
   const [imageType, setImageType] = useState('image/jpeg');
   const [loadingState, setLoadingState] = useState(false);
   const [convertedImages, setConvertedImages] = useState([]);
-  const [JPEGImageQuality, setJPEGImageQuality] = useState(5);
+  const [JPEGImageQuality, setJPEGImageQuality] = useState(0.3);
 
 
   const handleSubmit = async (event) => {
@@ -36,10 +36,7 @@ function App() {
 
         let url = window.URL.createObjectURL(conversionResult[0]);
         
-        setConvertedImages([
-            ...convertedImages,
-            url
-        ])
+        setConvertedImages((prevState) => [...prevState, url]);
 
       }
       
@@ -48,6 +45,7 @@ function App() {
 
   const handleOnChange = async (event) => {
     const filesArray = Array.from(event.target.files);
+    console.log(filesArray);
     setImagesToConvert(filesArray)
   }
 
@@ -99,12 +97,22 @@ function App() {
                         
                     </label>
                     <button type="submit" className="convert__btn dropshadow">Convert</button>
+                    
                     <select defaultValue={imageType} onChange={(e) => setImageType(e.target.value)}>
                       <option disabled></option>
                       <option value="image/jpeg">JPEG</option>
                       <option value="image/png">PNG</option>
                       <option value="image/gif">GIF</option>
                     </select>
+
+                    {
+                      imageType === 'image/jpeg' ? ( <select defaultValue={JPEGImageQuality} onChange={(e) => setJPEGImageQuality(e.target.value)}>
+                        <option disabled></option>
+                        <option value="0.3">Compressed</option>
+                        <option value="0.5">Medium</option>
+                        <option value="1">Original</option>
+                        </select> ) : null
+                    }
                   </div>
                   <input id="image-upload" type="file" accept=".heic,.heif" onChange={handleOnChange} multiple name="files[]" />
                 
